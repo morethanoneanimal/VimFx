@@ -59,6 +59,13 @@ command_marker_focus = (vim) ->
 
   vim.enterMode('hints', callback)
 
+# Focus element and clear it
+command_marker_focus_clear = (vim) ->
+  callback = (marker) ->  
+      marker.element.value = '' if utils.isTextInputElement(marker.element)
+      marker.element.focus()
+
+  vim.enterMode('hints', callback)
 # Copy the current URL to the system clipboard.
 command_yank = (vim) ->
   utils.writeToClipboard(vim.window.location.href)
@@ -343,6 +350,7 @@ commands = [
   new Command('urls',   'paste_tab',             command_paste_tab,             ['P'])
   new Command('urls',   'marker_yank',           command_marker_yank,           ['y,f'])
   new Command('urls',   'marker_focus',          command_marker_focus,          ['v,f'])
+  new Command('urls',   'marker_focus_clear',    command_marker_focus_clear,    ['V,f'])
   new Command('urls',   'yank',                  command_yank,                  ['y,y'])
   new Command('urls',   'reload',                command_reload,                ['r'])
   new Command('urls',   'reload_force',          command_reload_force,          ['R'])
